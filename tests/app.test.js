@@ -3,7 +3,8 @@ const app = require("../server");
 
 describe("GET /", () => {
   it("should return greeting message", async () => {
-    const response = await request("http://localhost:3000").get("/");
-    expect(response.status).toBe(200);
+    const res = await request(app).get("/");
+    expect(res.statusCode).toBe(200);
+    expect(res.body).toEqual({ message: "Hello, World!" });
   });
 });

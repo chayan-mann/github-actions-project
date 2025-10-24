@@ -1,11 +1,12 @@
 {
   "name": "github-actions-demo",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "Simple Node.js REST API for CI/CD demo",
+  "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "nodemon server.js"
+    "start": "node server.js",
+    "test": "jest",
+    "dev" : "nodemon server.js"
   },
   "keywords": [],
   "author": "",
