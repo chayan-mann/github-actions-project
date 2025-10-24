@@ -1,0 +1,78 @@
+# Node modules
+node_modules/
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+pnpm-debug.log*
+lerna-debug.log*
+*.log
+
+# Runtime / env
+.env
+.env.local
+.env.*.local
+.env.test
+.env.production
+
+# Dependency directories
+.pnp/
+.pnp.cjs
+.pnp.js
+.yarn/*
+!.yarn/patches
+!.yarn/releases
+!.yarn/plugins
+!.yarn/sdks
+!.yarn/versions
+
+# Build / output
+dist/
+build/
+out/
+coverage/
+.nyc_output/
+reports/
+
+# Framework/tool caches
+.next/
+.nuxt/
+.cache/
+.vite/
+.parcel-cache/
+.esbuild/
+.sass-cache/
+
+# Temp / runtime files
+tmp/
+temp/
+pids/
+*.pid
+*.seed
+*.pid.lock
+uploads/
+public/uploads/
+
+# DB / storage
+*.sqlite
+*.sqlite3
+*.db
+*.dump
+
+# IDEs / OS
+.vscode/
+.idea/
+*.swp
+.DS_Store
+Thumbs.db
+
+# Docker / CI / misc
+docker-compose.override.yml
+.env.docker
+.vagrant/
+*.pem
+*.key
+
+# Ignore npm/yarn lock integrity files if desired
+.yarn-integrity
+
