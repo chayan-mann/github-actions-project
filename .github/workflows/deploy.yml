@@ -6,13 +6,11 @@ on:
   pull_request:
 
 jobs:
-  build-test-deploy:
+  test:
     runs-on: ubuntu-latest
-
     strategy:
       matrix:
         node-version: [18, 20]
-
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -36,6 +34,15 @@ jobs:
       - name: Run tests
         run: npm test
 
+  build-and-deploy:
+    needs: test
+    runs-on: ubuntu-latest
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
       - name: Build Docker image
         run: docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/github-actions-demo:${{ github.sha }} .
 
@@ -49,7 +56,6 @@ jobs:
         run: docker push ${{ secrets.DOCKERHUB_USERNAME }}/github-actions-demo:${{ github.sha }}
 
       - name: Deploy to EC2
-        if: success()
         uses: appleboy/ssh-action@v1.0.3
         with:
           host: ${{ secrets.EC2_HOST }}
@@ -57,8 +63,27 @@ jobs:
           key: ${{ secrets.EC2_SSH_KEY }}
           script: |
             echo "🔄 Deploying new Docker container..."
-            docker pull ${{ secrets.DOCKERHUB_USERNAME }}/github-actions-demo:${{ github.sha }}
+            
+            # Stop and remove existing container
             docker stop app || true
             docker rm app || true
-            docker run -d -p 80:3000 --name app ${{ secrets.DOCKERHUB_USERNAME }}/github-actions-demo:${{ github.sha }}
-            echo "✅ Deployment successful!"
+            
+            # Pull the latest image
+            docker pull ${{ secrets.DOCKERHUB_USERNAME }}/github-actions-demo:${{ github.sha }}
+            
+            # Remove old images to save space (keep last 3)
+            docker images ${{ secrets.DOCKERHUB_USERNAME }}/github-actions-demo --format "table {{.Repository}}:{{.Tag}}\t{{.ID}}" | tail -n +4 | awk '{print $2}' | xargs -r docker rmi || true
+            
+            # Run new container with correct port mapping (8000 is your app port)
+            docker run -d -p 80:8000 --name app --restart unless-stopped ${{ secrets.DOCKERHUB_USERNAME }}/github-actions-demo:${{ github.sha }}
+            
+            # Verify deployment
+            sleep 5
+            if docker ps | grep -q "app"; then
+              echo "✅ Deployment successful!"
+              echo "🌐 App should be available at http://$(curl -s ifconfig.me)"
+            else
+              echo "❌ Deployment failed - container not running"
+              docker logs app
+              exit 1
+            fi
