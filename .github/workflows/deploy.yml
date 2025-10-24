@@ -38,7 +38,7 @@ jobs:
     needs: test
     runs-on: ubuntu-latest
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
-    
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -64,7 +64,11 @@ jobs:
           script: |
             echo "🔄 Deploying new Docker container..."
             
-            # Stop and remove existing container
+            # Stop ALL containers using port 80 to prevent conflicts
+            docker ps --format "table {{.Names}}\t{{.Ports}}" | grep ":80->" | awk '{print $1}' | xargs -r docker stop || true
+            docker ps -a --format "table {{.Names}}\t{{.Ports}}" | grep ":80->" | awk '{print $1}' | xargs -r docker rm || true
+            
+            # Also specifically target our app container
             docker stop app || true
             docker rm app || true
             
