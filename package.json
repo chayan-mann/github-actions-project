@@ -4,7 +4,7 @@
   "description": "Simple Node.js REST API for CI/CD demo",
   "main": "server.js",
   "scripts": {
-    "start": "node server.js",
+    "start": "node start.js",
     "test": "jest",
     "dev" : "nodemon server.js"
   },
