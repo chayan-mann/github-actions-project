@@ -63,24 +63,24 @@ jobs:
           key: ${{ secrets.EC2_SSH_KEY }}
           script: |
             echo "🔄 Deploying new Docker container..."
-            
+
             # Stop ALL containers using port 80 to prevent conflicts
             docker ps --format "table {{.Names}}\t{{.Ports}}" | grep ":80->" | awk '{print $1}' | xargs -r docker stop || true
             docker ps -a --format "table {{.Names}}\t{{.Ports}}" | grep ":80->" | awk '{print $1}' | xargs -r docker rm || true
-            
+
             # Also specifically target our app container
             docker stop app || true
             docker rm app || true
-            
+
             # Pull the latest image
             docker pull ${{ secrets.DOCKERHUB_USERNAME }}/github-actions-demo:${{ github.sha }}
-            
+
             # Remove old images to save space (keep last 3)
             docker images ${{ secrets.DOCKERHUB_USERNAME }}/github-actions-demo --format "table {{.Repository}}:{{.Tag}}\t{{.ID}}" | tail -n +4 | awk '{print $2}' | xargs -r docker rmi || true
-            
+
             # Run new container with correct port mapping (8000 is your app port)
             docker run -d -p 80:8000 --name app --restart unless-stopped ${{ secrets.DOCKERHUB_USERNAME }}/github-actions-demo:${{ github.sha }}
-            
+
             # Verify deployment
             sleep 5
             if docker ps | grep -q "app"; then
