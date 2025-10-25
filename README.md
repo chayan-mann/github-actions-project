@@ -73,7 +73,7 @@ The following environment variables are used in the project:
 ## 👨‍💻 Author
 
 **Chayan Mann**  
-GitHub: [@chayanmann](https://github.com/chayanmann)
+GitHub: [@chayanmann](https://github.com/chayan-mann)
 
 ---
 
