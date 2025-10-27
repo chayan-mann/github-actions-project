@@ -5,15 +5,22 @@
   "main": "server.js",
   "scripts": {
     "start": "node start.js",
+    "dev": "nodemon start.js",
     "test": "jest",
-    "dev" : "nodemon server.js"
+    "docker:build": "docker-compose build",
+    "docker:up": "docker-compose up -d",
+    "docker:down": "docker-compose down",
+    "docker:logs": "docker-compose logs -f"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "type": "commonjs",
   "dependencies": {
-    "express": "^5.1.0"
+    "express": "^5.1.0",
+    "mongoose": "^8.0.0",
+    "dotenv": "^16.3.1",
+    "cors": "^2.8.5"
   },
   "devDependencies": {
     "jest": "^30.2.0",
