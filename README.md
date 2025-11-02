@@ -1,18 +1,10 @@
 # GitHub Actions CI/CD Demo with MongoDB# GitHub Actions CI/CD Demo
 
-
-
 A **production-ready Node.js REST API** with MongoDB, demonstrating modern DevOps practices including **Docker**, **Docker Compose**, **GitHub Actions CI/CD**, and **AWS EC2 deployment**.This project demonstrates a **Node.js backend application** deployed using **GitHub Actions**, **Docker**, and **AWS EC2**. It includes a CI/CD pipeline that automates testing, building, and deploying the application.
 
-
-
-------
-
-
+---
 
 ## 🚀 Features## 🚀 Features
-
-
 
 - ✅ **RESTful API** with Express.js- **Node.js Backend**: A simple Express.js server.
 
@@ -30,23 +22,17 @@ A **production-ready Node.js REST API** with MongoDB, demonstrating modern DevOp
 
 - ✅ **Environment-based configuration**
 
-
-
 ---### Prerequisites
 
 - [Node.js](https://nodejs.org/) (v18+ recommended)
 
 ## 📋 API Endpoints- [Docker](https://www.docker.com/)
 
-
-
 ### General
 
 - `GET /` - API welcome message
 
 - `GET /health` - Health check endpoint
-
-
 
 ### Tasks
 
@@ -70,7 +56,7 @@ A **production-ready Node.js REST API** with MongoDB, demonstrating modern DevOp
 
 4. **Deploy to EC2**: Deploys the Dockerized application to an AWS EC2 instance.
 
-```
+````
 
 github-actions-demo/---
 
@@ -120,7 +106,7 @@ github-actions-demo/---
 
 ### Prerequisites## 📦 Dependencies
 
-- **Node.js** 18+ 
+- **Node.js** 18+
 
 - **Docker** & **Docker Compose**### Runtime
 
@@ -146,7 +132,7 @@ cd github-actions-demo
 
 cp .env.example .env
 
-**Chayan Mann**  
+**Chayan Mann**
 
 # Start all services (MongoDB + App)GitHub: [@chayanmann](https://github.com/chayanmann)
 
@@ -163,7 +149,7 @@ docker-compose logs -f## 📜 License
 # Stop servicesThis project is licensed under the [MIT License](LICENSE).
 
 docker-compose down
-```
+````
 
 **Access the API**: `http://localhost:8000`
 
@@ -222,6 +208,7 @@ npm run docker:build
 ## 📝 Example API Usage
 
 ### Create a Task
+
 ```bash
 curl -X POST http://localhost:8000/api/tasks \
   -H "Content-Type: application/json" \
@@ -234,11 +221,13 @@ curl -X POST http://localhost:8000/api/tasks \
 ```
 
 ### Get All Tasks
+
 ```bash
 curl http://localhost:8000/api/tasks
 ```
 
 ### Update a Task
+
 ```bash
 curl -X PUT http://localhost:8000/api/tasks/<task-id> \
   -H "Content-Type: application/json" \
@@ -246,6 +235,7 @@ curl -X PUT http://localhost:8000/api/tasks/<task-id> \
 ```
 
 ### Delete a Task
+
 ```bash
 curl -X DELETE http://localhost:8000/api/tasks/<task-id>
 ```
@@ -257,12 +247,14 @@ curl -X DELETE http://localhost:8000/api/tasks/<task-id>
 The project uses **GitHub Actions** for continuous integration and deployment:
 
 ### Workflow Steps:
+
 1. **Test** → Run unit tests on Node.js 18 & 20
 2. **Build** → Create Docker image tagged with commit SHA
 3. **Push** → Upload image to Docker Hub
 4. **Deploy** → Deploy to AWS EC2 instance
 
 ### Secrets Required:
+
 - `DOCKERHUB_USERNAME` - Docker Hub username
 - `DOCKERHUB_TOKEN` - Docker Hub access token
 - `EC2_HOST` - EC2 instance public IP
@@ -273,6 +265,7 @@ The project uses **GitHub Actions** for continuous integration and deployment:
 ## 🌐 Deployment
 
 ### AWS EC2 Deployment
+
 The application automatically deploys to EC2 on every push to `main`:
 
 1. GitHub Actions builds Docker image
@@ -284,6 +277,7 @@ The application automatically deploys to EC2 on every push to `main`:
 7. Verifies deployment
 
 ### Manual Deployment
+
 ```bash
 # SSH into EC2
 ssh -i your-key.pem ubuntu@your-ec2-ip
@@ -301,10 +295,10 @@ docker run -d -p 80:8000 --name app \
 
 ## 🔧 Environment Variables
 
-| Variable | Description | Default |
-|----------|-------------|---------|
-| `PORT` | Server port | `8000` |
-| `NODE_ENV` | Environment | `development` |
+| Variable    | Description               | Default                                       |
+| ----------- | ------------------------- | --------------------------------------------- |
+| `PORT`      | Server port               | `8000`                                        |
+| `NODE_ENV`  | Environment               | `development`                                 |
 | `MONGO_URI` | MongoDB connection string | `mongodb://mongodb:27017/github-actions-demo` |
 
 ---
@@ -325,6 +319,7 @@ docker run -d -p 80:8000 --name app \
 ## 🎓 Learning Outcomes
 
 This project demonstrates:
+
 - ✅ Building RESTful APIs with Node.js
 - ✅ Database integration with MongoDB
 - ✅ Multi-container orchestration with Docker Compose

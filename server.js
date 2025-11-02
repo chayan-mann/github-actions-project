@@ -10,21 +10,21 @@ app.use(express.urlencoded({ extended: true }));
 
 // Routes
 app.get("/", (req, res) => {
-  res.json({ 
+  res.json({
     message: "Welcome to GitHub Actions CI/CD Demo API! 🚀",
     version: "2.0.0",
     endpoints: {
       tasks: "/api/tasks",
-      health: "/health"
-    }
+      health: "/health",
+    },
   });
 });
 
 app.get("/health", (req, res) => {
-  res.json({ 
+  res.json({
     status: "healthy",
     timestamp: new Date().toISOString(),
-    uptime: process.uptime()
+    uptime: process.uptime(),
   });
 });
 
@@ -35,7 +35,7 @@ app.use("/api/tasks", require("./routes/tasks"));
 app.use((req, res) => {
   res.status(404).json({
     success: false,
-    error: "Route not found"
+    error: "Route not found",
   });
 });
 
@@ -44,7 +44,7 @@ app.use((err, req, res, next) => {
   console.error(err.stack);
   res.status(500).json({
     success: false,
-    error: "Something went wrong!"
+    error: "Something went wrong!",
   });
 });
 
